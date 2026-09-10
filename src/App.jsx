@@ -1,7 +1,8 @@
 import './App.css'
 
-const whatsappLink =
-  'https://wa.me/5561996787399?text=Ol%C3%A1%2C%20Dra.%20Jaqueline!%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o.'
+const whatsappNumber = '5561996787399'
+const waMessage = (text) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`
+const whatsappLink = waMessage('Olá, Dra. Jaqueline! Gostaria de agendar uma avaliação.')
 
 const services = [
   ['01', 'Quiropraxia', 'Realinhamento da coluna para devolver mais leveza e liberdade ao movimento.', 'icon-spine'],
@@ -10,13 +11,13 @@ const services = [
   ['04', 'Fisioterapia Geriátrica', 'Atendimento hospitalar e domiciliar para idosos viverem com mais segurança.', 'icon-cane'],
   ['05', 'Fisioterapia Esportiva', 'Prevenção e reabilitação para você voltar ao que ama fazer.', 'icon-pulse'],
   ['06', 'Fisioterapia Pélvica / Gestante', 'Acolhimento e cuidado para as transformações de cada fase da gestação.', 'icon-two-hearts'],
-  ['07', 'Fisio dos baby', 'Fisioterapia neonatal e pediátrica com delicadeza para os pequenos.', 'icon-pacifier'],
+  ['07', 'Fisioterapia Infantil', 'Fisioterapia neonatal e pediátrica com delicadeza para os pequenos.', 'icon-baby-bottle'],
   ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home-heart'],
 ]
 
 const audience = [
   ['Idosos', 'icon-cane'],
-  ['Bebês e crianças', 'icon-pacifier'],
+  ['Bebês e crianças', 'icon-baby-bottle'],
   ['Gestantes', 'icon-two-hearts'],
   ['Atletas', 'icon-pulse'],
   ['Adultos', 'icon-heart'],
@@ -92,7 +93,7 @@ function App() {
               <div className="credentials">
                 <span><Icon id="icon-cross" />Fisioterapeuta</span>
                 <span><Icon id="icon-spine" />Quiropraxista</span>
-                <span><Icon id="icon-pacifier" />Neo/Ped</span>
+                <span><Icon id="icon-baby-bottle" />Neo/Ped</span>
               </div>
             </div>
           </div>
@@ -101,7 +102,7 @@ function App() {
         <section className="services-section" id="servicos">
           <div className="content-section">
             <div className="section-heading"><div className="section-label"><span>02</span><span>Como posso ajudar</span></div><h2>Um cuidado que acompanha<br /><em>o seu ritmo.</em></h2><p>Atendimentos pensados para o que seu corpo precisa hoje.</p></div>
-            <div className="service-grid">{services.map(([number, title, description, icon]) => <article className="service-card" key={number}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="card-arrow" aria-hidden="true">↗</span></article>)}</div>
+            <div className="service-grid">{services.map(([number, title, description, icon]) => <a className="service-card" key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="card-arrow" aria-hidden="true">↗</span></a>)}</div>
           </div>
         </section>
 
