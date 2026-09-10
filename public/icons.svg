@@ -50,4 +50,8 @@
     <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M6 10.5V19a1 1 0 0 0 1 1h4v-5.5h2V20h4a1 1 0 0 0 1-1v-8.5"/>
     <path fill="currentColor" d="M12 9.4c-.4-.6-1.5-.6-1.5.4 0 .7 1.5 1.6 1.5 1.6s1.5-.9 1.5-1.6c0-1-1.1-1-1.5-.4Z"/>
   </symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 6-7"/>
+  </symbol>
 </svg>

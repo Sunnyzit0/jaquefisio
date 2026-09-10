@@ -15,12 +15,25 @@ const services = [
   ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home-heart'],
 ]
 
-const audience = [
-  ['Idosos', 'icon-cane'],
-  ['Bebês e crianças', 'icon-baby-bottle'],
-  ['Gestantes', 'icon-two-hearts'],
-  ['Atletas', 'icon-pulse'],
-  ['Adultos', 'icon-heart'],
+const heroStats = [
+  [`${services.length}+`, 'áreas de atuação'],
+  ['3', 'formas de atendimento'],
+  ['2', 'pós-graduações especializadas'],
+]
+
+const trustBadges = [
+  'CREFITO nº [preencher]',
+  'Atendimento humanizado',
+  'Pós-graduada em Ortopedia e Neuro Neo/Ped',
+  'Consultório, hospitalar e domiciliar',
+]
+
+const differentials = [
+  'Atendimento humanizado e acolhedor, do primeiro contato ao retorno',
+  'Atende todas as idades: idosos, bebês, crianças, gestantes, atletas e adultos',
+  'Agendamento fácil e rápido pelo WhatsApp',
+  'Atendimento em consultório, hospitalar e domiciliar',
+  'Profissional com pós-graduação em Ortopedia e Neuro Neo/Ped',
 ]
 
 function Icon({ id, className }) {
@@ -28,6 +41,15 @@ function Icon({ id, className }) {
     <svg className={`icon${className ? ` ${className}` : ''}`} aria-hidden="true">
       <use href={`/icons.svg#${id}`} />
     </svg>
+  )
+}
+
+function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a', className = '' }) {
+  return (
+    <div className={`photo-placeholder photo-placeholder--${shape} photo-placeholder--tint-${tint}${className ? ` ${className}` : ''}`}>
+      <span className="photo-placeholder-icon"><Icon id="icon-camera" /></span>
+      {label && <span className="photo-placeholder-label">{label}</span>}
+    </div>
   )
 }
 
@@ -49,6 +71,9 @@ function App() {
             <h1>Cuidar do corpo é<br /><em>cuidar da vida.</em></h1>
             <p className="hero-intro">Um cuidado próximo, afetivo e feito para pessoas de todas as fases: idosos, bebês, crianças, gestantes, atletas e adultos.</p>
             <div className="hero-actions"><a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a><a className="text-link" href="#servicos">Conheça os atendimentos <span aria-hidden="true">↓</span></a></div>
+            <ul className="hero-stats">
+              {heroStats.map(([number, label]) => <li key={label} className="stat-card"><span className="stat-number">{number}</span><span className="stat-label">{label}</span></li>)}
+            </ul>
           </div>
           <div className="hero-art" aria-label="Foto de Jaqueline Lima em breve">
             <span className="blob blob-hero-1" aria-hidden="true"></span>
@@ -65,11 +90,10 @@ function App() {
           </div>
         </section>
 
-        <section className="audience-strip" aria-label="Pessoas atendidas">
-          <div className="audience-strip-inner">
-            <span className="audience-lead">Para cada história, um cuidado</span>
-            <ul className="audience-chips">
-              {audience.map(([label, icon]) => <li key={label}><Icon id={icon} />{label}</li>)}
+        <section className="trust-strip" aria-label="Selos de confiança">
+          <div className="trust-strip-inner">
+            <ul className="trust-badges">
+              {trustBadges.map((label) => <li key={label}><Icon id="icon-check" />{label}</li>)}
             </ul>
           </div>
         </section>
@@ -78,14 +102,6 @@ function App() {
           <div className="section-label"><span>01</span><span>Sobre mim</span></div>
           <h2>Tem espaço para <em>você</em> aqui. <span aria-hidden="true">🤍</span></h2>
           <div className="about-content">
-            <div className="about-photo">
-              <span className="blob blob-about" aria-hidden="true"></span>
-              <div className="about-photo-card">
-                <span className="about-photo-icon"><Icon id="icon-camera" /></span>
-                <span className="about-photo-label">Foto de<br />Jaqueline Lima</span>
-              </div>
-              <span className="about-photo-badge"><Icon id="icon-heart" /></span>
-            </div>
             <div className="about-text">
               <p className="lead">Eu sou Jaqueline Lima, fisioterapeuta e quiropraxista. Acredito que cuidar é estar perto, ouvir com atenção e respeitar o tempo de cada pessoa.</p>
               <p>Minha formação inclui Pós-graduação em Fisioterapia Ortopédica e Pós-graduação em Fisioterapia Neurológica Neo/Ped, com foco neonatal e pediátrico. Essa mistura de conhecimento e carinho guia cada atendimento.</p>
@@ -96,13 +112,45 @@ function App() {
                 <span><Icon id="icon-baby-bottle" />Neo/Ped</span>
               </div>
             </div>
+            <div className="about-photos">
+              <PhotoPlaceholder label="Atendimento em consultório" shape="arch" tint="a" />
+              <PhotoPlaceholder label="Cuidado domiciliar" shape="arch" tint="b" />
+              <PhotoPlaceholder label="Acompanhamento hospitalar" shape="arch" tint="c" />
+            </div>
+          </div>
+          <div className="about-pillars">
+            <div className="pillar">
+              <h3>Missão</h3>
+              <p>Cuidar com atenção e respeito, devolvendo autonomia e qualidade de vida em cada fase da vida — dos primeiros meses à terceira idade.</p>
+            </div>
+            <div className="pillar">
+              <h3>Como trabalho</h3>
+              <p>Avaliação individual, escuta atenta e um plano de tratamento pensado para o seu corpo e o seu tempo, no consultório, no hospital ou na sua casa.</p>
+            </div>
           </div>
         </section>
 
         <section className="services-section" id="servicos">
           <div className="content-section">
             <div className="section-heading"><div className="section-label"><span>02</span><span>Como posso ajudar</span></div><h2>Um cuidado que acompanha<br /><em>o seu ritmo.</em></h2><p>Atendimentos pensados para o que seu corpo precisa hoje.</p></div>
-            <div className="service-grid">{services.map(([number, title, description, icon]) => <a className="service-card" key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="card-arrow" aria-hidden="true">↗</span></a>)}</div>
+            <div className="service-grid">{services.map(([number, title, description, icon]) => <a className="service-card" key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta">Saiba mais <span aria-hidden="true" className="arrow">↗</span></span></a>)}</div>
+          </div>
+        </section>
+
+        <section className="content-section differentials-section" id="diferenciais">
+          <div className="differentials-grid">
+            <div className="differentials-photo">
+              <span className="blob blob-differentials" aria-hidden="true"></span>
+              <PhotoPlaceholder label="Foto de Jaqueline Lima" shape="blob" tint="b" />
+            </div>
+            <div className="differentials-text">
+              <div className="section-label"><span>03</span><span>Por que escolher</span></div>
+              <h2>Diferenciais que fazem<br /><em>a diferença.</em></h2>
+              <ul className="differentials-list">
+                {differentials.map((item) => <li key={item}><Icon id="icon-check" />{item}</li>)}
+              </ul>
+              <a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </section>
 
@@ -110,7 +158,7 @@ function App() {
           <span className="blob blob-contact" aria-hidden="true"></span>
           <div className="contact-card">
             <div className="contact-main">
-              <div className="section-label"><span>03</span><span>Vamos conversar</span></div>
+              <div className="section-label"><span>04</span><span>Vamos conversar</span></div>
               <h2>Seu próximo passo<br />pode começar <em>agora.</em></h2>
               <p>Me conte como posso cuidar de você ou de quem você ama. O agendamento é feito de forma simples e gentil pelo WhatsApp.</p>
               <a className="primary-button light-button" href={whatsappLink} target="_blank" rel="noreferrer"><Icon id="icon-chat" /> Falar pelo WhatsApp <span aria-hidden="true">↗</span></a>
