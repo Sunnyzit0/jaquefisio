@@ -1,5 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+
+// Reveals `.reveal` elements with a fade + translateY as they enter the viewport.
+// Plain IntersectionObserver instead of a library (e.g. Framer Motion) to keep the bundle light.
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal')
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+    )
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+}
+
+// Inline style for a staggered reveal delay, e.g. the Nth card in a grid.
+const staggerStyle = (index, step = 0.08) => ({ '--reveal-delay': `${index * step}s` })
 
 const whatsappNumber = '5561996787399'
 const waMessage = (text) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`
@@ -73,13 +101,13 @@ function Icon({ id, className }) {
   )
 }
 
-function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a', className = '', src, alt }) {
+function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a', className = '', src, alt, style }) {
   const shapeClass = `photo-placeholder photo-placeholder--${shape} photo-placeholder--tint-${tint}${className ? ` ${className}` : ''}`
   if (src) {
-    return <img className={`${shapeClass} photo-placeholder--img`} src={src} alt={alt || label} loading="lazy" decoding="async" />
+    return <img className={`${shapeClass} photo-placeholder--img`} src={src} alt={alt || label} loading="lazy" decoding="async" style={style} />
   }
   return (
-    <div className={shapeClass}>
+    <div className={shapeClass} style={style}>
       <span className="photo-placeholder-icon"><Icon id="icon-camera" /></span>
       {label && <span className="photo-placeholder-label">{label}</span>}
     </div>
@@ -89,6 +117,7 @@ function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a',
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = () => setMenuOpen(false)
+  useScrollReveal()
 
   return (
     <div className="site-shell">
@@ -125,15 +154,15 @@ function App() {
       <main>
         <section className="hero-section" id="inicio">
           <div className="hero-copy">
-            <p className="eyebrow"><span className="eyebrow-icon"><Icon id="icon-heart" /></span> Fisioterapia e Quiropraxia · Padre Bernardo - GO</p>
-            <h1>Cuidar do corpo é<br /><em>cuidar da vida.</em></h1>
-            <p className="hero-intro">Um cuidado próximo, afetivo e feito para pessoas de todas as fases: idosos, bebês, crianças, gestantes, atletas e adultos.</p>
-            <div className="hero-actions"><a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a><a className="text-link" href="#servicos">Conheça os atendimentos <span aria-hidden="true">↓</span></a></div>
-            <ul className="hero-stats">
+            <p className="eyebrow reveal"><span className="eyebrow-icon"><Icon id="icon-heart" /></span> Fisioterapia e Quiropraxia · Padre Bernardo - GO</p>
+            <h1 className="reveal" style={staggerStyle(1)}>Cuidar do corpo é<br /><em>cuidar da vida.</em></h1>
+            <p className="hero-intro reveal" style={staggerStyle(2)}>Um cuidado próximo, afetivo e feito para pessoas de todas as fases: idosos, bebês, crianças, gestantes, atletas e adultos.</p>
+            <div className="hero-actions reveal" style={staggerStyle(3)}><a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a><a className="text-link" href="#servicos">Conheça os atendimentos <span aria-hidden="true">↓</span></a></div>
+            <ul className="hero-stats reveal" style={staggerStyle(4)}>
               {heroStats.map(([number, label]) => <li key={label} className="stat-card"><span className="stat-number">{number}</span><span className="stat-label">{label}</span></li>)}
             </ul>
           </div>
-          <div className="hero-art" aria-label="Foto de Jaqueline Lima em breve">
+          <div className="hero-art reveal" style={staggerStyle(2)} aria-label="Foto de Jaqueline Lima em breve">
             <span className="blob blob-hero-1" aria-hidden="true"></span>
             <span className="blob blob-hero-2" aria-hidden="true"></span>
             <div className="art-ring art-ring-one"></div>
@@ -157,16 +186,16 @@ function App() {
         <section className="trust-strip" aria-label="Selos de confiança">
           <div className="trust-strip-inner">
             <ul className="trust-badges">
-              {trustBadges.map((label) => <li key={label}><Icon id="icon-check" />{label}</li>)}
+              {trustBadges.map((label, i) => <li key={label} className="reveal" style={staggerStyle(i)}><Icon id="icon-check" />{label}</li>)}
             </ul>
           </div>
         </section>
 
         <section className="content-section about-section" id="sobre">
-          <div className="section-label"><span>01</span><span>Sobre mim</span></div>
-          <h2>Tem espaço para <em>você</em> aqui. <span aria-hidden="true">🤍</span></h2>
+          <div className="section-label reveal"><span>01</span><span>Sobre mim</span></div>
+          <h2 className="reveal" style={staggerStyle(1)}>Tem espaço para <em>você</em> aqui. <span aria-hidden="true">🤍</span></h2>
           <div className="about-content">
-            <div className="about-text">
+            <div className="about-text reveal">
               <p className="lead">Eu sou Jaqueline Lima, fisioterapeuta e quiropraxista. Acredito que cuidar é estar perto, ouvir com atenção e respeitar o tempo de cada pessoa.</p>
               <p>Minha formação inclui Pós-graduação em Fisioterapia Ortopédica e Pós-graduação em Fisioterapia Neurológica Neo/Ped, com foco neonatal e pediátrico. Essa mistura de conhecimento e carinho guia cada atendimento.</p>
               <p>Seja para recuperar um movimento, aliviar uma dor ou acompanhar uma nova fase, meu propósito é fazer você se sentir acolhido e confiante no próprio corpo.</p>
@@ -177,17 +206,17 @@ function App() {
               </div>
             </div>
             <div className="about-photos">
-              <PhotoPlaceholder label="Atendimento em consultório" shape="arch" tint="a" src={PHOTOS.consultorio} />
-              <PhotoPlaceholder label="Cuidado domiciliar" shape="arch" tint="b" src={PHOTOS.domiciliar} />
-              <PhotoPlaceholder label="Acompanhamento hospitalar" shape="arch" tint="c" src={PHOTOS.hospitalar} />
+              <PhotoPlaceholder label="Atendimento em consultório" shape="arch" tint="a" src={PHOTOS.consultorio} className="reveal" style={staggerStyle(0)} />
+              <PhotoPlaceholder label="Cuidado domiciliar" shape="arch" tint="b" src={PHOTOS.domiciliar} className="reveal" style={staggerStyle(1)} />
+              <PhotoPlaceholder label="Acompanhamento hospitalar" shape="arch" tint="c" src={PHOTOS.hospitalar} className="reveal" style={staggerStyle(2)} />
             </div>
           </div>
           <div className="about-pillars">
-            <div className="pillar">
+            <div className="pillar reveal">
               <h3>Missão</h3>
               <p>Cuidar com atenção e respeito, devolvendo autonomia e qualidade de vida em cada fase da vida — dos primeiros meses à terceira idade.</p>
             </div>
-            <div className="pillar">
+            <div className="pillar reveal" style={staggerStyle(1)}>
               <h3>Como trabalho</h3>
               <p>Avaliação individual, escuta atenta e um plano de tratamento pensado para o seu corpo e o seu tempo, no consultório, no hospital ou na sua casa.</p>
             </div>
@@ -196,34 +225,34 @@ function App() {
 
         <section className="services-section" id="servicos">
           <div className="content-section">
-            <div className="section-heading"><div className="section-label"><span>02</span><span>Como posso ajudar</span></div><h2>Um cuidado que acompanha<br /><em>o seu ritmo.</em></h2><p>Atendimentos pensados para o que seu corpo precisa hoje.</p></div>
-            <div className="service-grid">{services.map(([number, title, description, icon]) => <a className="service-card" key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta">Saiba mais <span aria-hidden="true" className="arrow">↗</span></span></a>)}</div>
+            <div className="section-heading reveal"><div className="section-label"><span>02</span><span>Como posso ajudar</span></div><h2>Um cuidado que acompanha<br /><em>o seu ritmo.</em></h2><p>Atendimentos pensados para o que seu corpo precisa hoje.</p></div>
+            <div className="service-grid">{services.map(([number, title, description, icon], i) => <a className="service-card reveal" style={staggerStyle(i, 0.06)} key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta">Saiba mais <span aria-hidden="true" className="arrow">↗</span></span></a>)}</div>
           </div>
         </section>
 
         <section className="content-section differentials-section" id="diferenciais">
           <div className="differentials-grid">
-            <div className="differentials-photo">
+            <div className="differentials-photo reveal">
               <span className="blob blob-differentials" aria-hidden="true"></span>
               <PhotoPlaceholder label="Foto de Jaqueline Lima" shape="blob" tint="b" src={PHOTOS.diferenciais} />
             </div>
             <div className="differentials-text">
-              <div className="section-label"><span>03</span><span>Por que escolher</span></div>
-              <h2>Diferenciais que fazem<br /><em>a diferença.</em></h2>
+              <div className="section-label reveal"><span>03</span><span>Por que escolher</span></div>
+              <h2 className="reveal" style={staggerStyle(1)}>Diferenciais que fazem<br /><em>a diferença.</em></h2>
               <ul className="differentials-list">
-                {differentials.map((item) => <li key={item}><Icon id="icon-check" />{item}</li>)}
+                {differentials.map((item, i) => <li key={item} className="reveal" style={staggerStyle(i)}><Icon id="icon-check" />{item}</li>)}
               </ul>
-              <a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a>
+              <a className="primary-button reveal" style={staggerStyle(differentials.length)} href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </section>
 
         <section className="content-section testimonials-section" id="depoimentos">
-          <div className="section-label"><span>04</span><span>O que dizem</span></div>
-          <h2>O que dizem<br /><em>sobre mim.</em></h2>
+          <div className="section-label reveal"><span>04</span><span>O que dizem</span></div>
+          <h2 className="reveal" style={staggerStyle(1)}>O que dizem<br /><em>sobre mim.</em></h2>
           <div className="testimonials-grid">
-            {testimonials.map(([name, role, text]) => (
-              <div className="testimonial-card" key={name}>
+            {testimonials.map(([name, role, text], i) => (
+              <div className="testimonial-card reveal" style={staggerStyle(i)} key={name}>
                 <span className="testimonial-quote-mark" aria-hidden="true">"</span>
                 <p className="testimonial-text">{text}</p>
                 <span className="testimonial-name">{name}</span>
@@ -235,7 +264,7 @@ function App() {
 
         <section className="content-section contact-section" id="contato">
           <span className="blob blob-contact" aria-hidden="true"></span>
-          <div className="contact-card">
+          <div className="contact-card reveal">
             <div className="contact-main">
               <div className="section-label"><span>05</span><span>Vamos conversar</span></div>
               <h2>Seu próximo passo<br />pode começar <em>agora.</em></h2>
