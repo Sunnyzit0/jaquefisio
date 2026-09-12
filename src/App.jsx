@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
+
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // Reveals `.reveal` elements with a fade + translateY as they enter the viewport.
 // Plain IntersectionObserver instead of a library (e.g. Framer Motion) to keep the bundle light.
@@ -29,6 +31,82 @@ function useScrollReveal() {
 // Inline style for a staggered reveal delay, e.g. the Nth card in a grid.
 const staggerStyle = (index, step = 0.08) => ({ '--reveal-delay': `${index * step}s` })
 
+// A vertical thread that fills in as the page is read, tipped with a spark marker —
+// the "line that draws itself" as you scroll, connecting the sections top to bottom.
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0)
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    let ticking = false
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0)
+      ticking = false
+    }
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+  return progress
+}
+
+// Subtle parallax on the hero illustration: it lags behind the page scroll,
+// giving the hero a sense of depth instead of moving 1:1 with the text.
+function useHeroParallax(ref) {
+  useEffect(() => {
+    if (!ref.current || prefersReducedMotion() || !window.matchMedia('(min-width: 900px)').matches) return
+    let ticking = false
+    const update = () => {
+      if (ref.current) ref.current.style.transform = `translateY(${window.scrollY * 0.1}px)`
+      ticking = false
+    }
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(update)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [ref])
+}
+
+// A soft trailing dot that follows the pointer and blooms open over anything
+// clickable — a small, deliberate detail for mouse/trackpad visitors only.
+function useCustomCursor(ref) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el || prefersReducedMotion() || !window.matchMedia('(pointer: fine)').matches) return
+    let raf = null
+    const move = (e) => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
+        raf = null
+      })
+    }
+    const onOver = (e) => { if (e.target.closest && e.target.closest('a, button')) el.classList.add('is-active') }
+    const onOut = (e) => { if (e.target.closest && e.target.closest('a, button')) el.classList.remove('is-active') }
+    document.addEventListener('mousemove', move, { passive: true })
+    document.addEventListener('mouseover', onOver)
+    document.addEventListener('mouseout', onOut)
+    el.classList.add('is-enabled')
+    return () => {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseover', onOver)
+      document.removeEventListener('mouseout', onOut)
+    }
+  }, [ref])
+}
+
 const whatsappNumber = '5561996787399'
 const waMessage = (text) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`
 const whatsappLink = waMessage('Olá, Dra. Jaqueline! Gostaria de agendar uma avaliação.')
@@ -53,15 +131,19 @@ const ENDERECO = '[endereço completo]'
 const HORARIO = '[horário]'
 const CONVENIOS = '[convênios/particular]'
 
+// O 5º campo quebra o grid uniforme: 'lg'/'md' dão mais presença aos serviços
+// que mais definem a Jaqueline (quiropraxia, geriátrica, domiciliar); o resto
+// fica 'sm' (padrão). Vira uma mancha assimétrica em telas largas e volta a
+// um grid simples de 1-2 colunas no mobile (ver media queries).
 const services = [
-  ['01', 'Quiropraxia', 'Realinhamento da coluna para devolver mais leveza e liberdade ao movimento.', 'icon-spine'],
+  ['01', 'Quiropraxia', 'Realinhamento da coluna para devolver mais leveza e liberdade ao movimento.', 'icon-spine', 'lg'],
   ['02', 'Fisioterapia Ortopédica', 'Cuidado próximo para dores, lesões e recuperação do dia a dia.', 'icon-cross'],
-  ['03', 'Fisioterapia Neurológica', 'Acompanhamento atento para recuperar funções e fortalecer a autonomia.', 'icon-spark-head'],
-  ['04', 'Fisioterapia Geriátrica', 'Atendimento hospitalar e domiciliar para idosos viverem com mais segurança.', 'icon-cane'],
+  ['03', 'Fisioterapia Neurológica', 'Acompanhamento atento para recuperar funções e fortalecer a autonomia.', 'icon-spark-head', 'md'],
+  ['04', 'Fisioterapia Geriátrica', 'Atendimento hospitalar e domiciliar para idosos viverem com mais segurança.', 'icon-cane', 'md'],
   ['05', 'Fisioterapia Esportiva', 'Prevenção e reabilitação para você voltar ao que ama fazer.', 'icon-pulse'],
   ['06', 'Fisioterapia Pélvica / Gestante', 'Acolhimento e cuidado para as transformações de cada fase da gestação.', 'icon-two-hearts'],
   ['07', 'Fisioterapia Infantil', 'Fisioterapia neonatal e pediátrica com delicadeza para os pequenos.', 'icon-baby-bottle'],
-  ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home'],
+  ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home', 'lg'],
 ]
 
 const heroStats = [
@@ -117,10 +199,22 @@ function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a',
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = () => setMenuOpen(false)
+  const heroArtRef = useRef(null)
+  const cursorRef = useRef(null)
   useScrollReveal()
+  const progress = useScrollProgress()
+  useHeroParallax(heroArtRef)
+  useCustomCursor(cursorRef)
 
   return (
     <div className="site-shell">
+      <div className="cursor-dot" ref={cursorRef} aria-hidden="true"></div>
+      <div className="scroll-progress" aria-hidden="true">
+        <div className="scroll-progress-track">
+          <div className="scroll-progress-fill" style={{ transform: `scaleY(${progress})` }}></div>
+          <div className="scroll-progress-marker" style={{ top: `${progress * 100}%` }}><Icon id="icon-spark" /></div>
+        </div>
+      </div>
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Jaqueline Lima, início">
           <span className="brand-mark">JL</span><span className="brand-name">Jaqueline Lima</span>
@@ -163,23 +257,25 @@ function App() {
             </ul>
           </div>
           <div className="hero-art reveal" style={staggerStyle(2)} aria-label="Foto de Jaqueline Lima em breve">
-            <span className="blob blob-hero-1" aria-hidden="true"></span>
-            <span className="blob blob-hero-2" aria-hidden="true"></span>
-            <div className="art-ring art-ring-one"></div>
-            <div className="art-ring art-ring-two"></div>
-            <div className="art-photo-card">
-              {PHOTOS.hero ? (
-                <img className="art-photo-img" src={PHOTOS.hero} alt="Jaqueline Lima" loading="eager" decoding="async" fetchPriority="high" />
-              ) : (
-                <>
-                  <span className="art-photo-icon"><Icon id="icon-camera" /></span>
-                  <span className="art-initials">JL</span>
-                  <span className="art-caption">presença<br />que transforma</span>
-                </>
-              )}
+            <div className="hero-art-parallax" ref={heroArtRef}>
+              <span className="blob blob-hero-1" aria-hidden="true"></span>
+              <span className="blob blob-hero-2" aria-hidden="true"></span>
+              <div className="art-ring art-ring-one"></div>
+              <div className="art-ring art-ring-two"></div>
+              <div className="art-photo-card">
+                {PHOTOS.hero ? (
+                  <img className="art-photo-img" src={PHOTOS.hero} alt="Jaqueline Lima" loading="eager" decoding="async" fetchPriority="high" />
+                ) : (
+                  <>
+                    <span className="art-photo-icon"><Icon id="icon-camera" /></span>
+                    <span className="art-initials">JL</span>
+                    <span className="art-caption">presença<br />que transforma</span>
+                  </>
+                )}
+              </div>
+              <span className="art-note art-note-top">movimento<br />com propósito</span>
+              <span className="art-note art-note-bottom">escuta<br />e cuidado</span>
             </div>
-            <span className="art-note art-note-top">movimento<br />com propósito</span>
-            <span className="art-note art-note-bottom">escuta<br />e cuidado</span>
           </div>
         </section>
 
@@ -226,7 +322,7 @@ function App() {
         <section className="services-section" id="servicos">
           <div className="content-section">
             <div className="section-heading reveal"><div className="section-label"><span>02</span><span>Como posso ajudar</span></div><h2>Um cuidado que acompanha<br /><em>o seu ritmo.</em></h2><p>Atendimentos pensados para o que seu corpo precisa hoje.</p></div>
-            <div className="service-grid">{services.map(([number, title, description, icon], i) => <a className="service-card reveal" style={staggerStyle(i, 0.06)} key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta btn-secondary">Saiba mais <Icon id="icon-arrow-up-right" /></span></a>)}</div>
+            <div className="service-grid">{services.map(([number, title, description, icon, size], i) => <a className={`service-card reveal${size ? ` service-card--${size}` : ''}`} style={staggerStyle(i, 0.06)} key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta btn-secondary">Saiba mais <Icon id="icon-arrow-up-right" /></span></a>)}</div>
           </div>
         </section>
 
