@@ -61,7 +61,7 @@ const services = [
   ['05', 'Fisioterapia Esportiva', 'Prevenção e reabilitação para você voltar ao que ama fazer.', 'icon-pulse'],
   ['06', 'Fisioterapia Pélvica / Gestante', 'Acolhimento e cuidado para as transformações de cada fase da gestação.', 'icon-two-hearts'],
   ['07', 'Fisioterapia Infantil', 'Fisioterapia neonatal e pediátrica com delicadeza para os pequenos.', 'icon-baby-bottle'],
-  ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home-heart'],
+  ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home'],
 ]
 
 const heroStats = [
@@ -134,7 +134,7 @@ function App() {
           <a className="header-cta" href={whatsappLink} target="_blank" rel="noreferrer">
             <span className="cta-full">Agendar avaliação</span>
             <span className="cta-short">Agendar</span>
-            <span aria-hidden="true">↗</span>
+            <Icon id="icon-arrow-up-right" />
           </a>
           <button
             type="button"
@@ -157,7 +157,7 @@ function App() {
             <p className="eyebrow reveal"><span className="eyebrow-icon"><Icon id="icon-heart" /></span> Fisioterapia e Quiropraxia · Padre Bernardo - GO</p>
             <h1 className="reveal" style={staggerStyle(1)}>Cuidar do corpo é<br /><em>cuidar da vida.</em></h1>
             <p className="hero-intro reveal" style={staggerStyle(2)}>Um cuidado próximo, afetivo e feito para pessoas de todas as fases: idosos, bebês, crianças, gestantes, atletas e adultos.</p>
-            <div className="hero-actions reveal" style={staggerStyle(3)}><a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a><a className="text-link" href="#servicos">Conheça os atendimentos <span aria-hidden="true">↓</span></a></div>
+            <div className="hero-actions reveal" style={staggerStyle(3)}><a className="primary-button" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <Icon id="icon-arrow-up-right" /></a><a className="btn-secondary text-link" href="#servicos">Conheça os atendimentos <Icon id="icon-arrow-down" /></a></div>
             <ul className="hero-stats reveal" style={staggerStyle(4)}>
               {heroStats.map(([number, label]) => <li key={label} className="stat-card"><span className="stat-number">{number}</span><span className="stat-label">{label}</span></li>)}
             </ul>
@@ -193,7 +193,7 @@ function App() {
 
         <section className="content-section about-section" id="sobre">
           <div className="section-label reveal"><span>01</span><span>Sobre mim</span></div>
-          <h2 className="reveal" style={staggerStyle(1)}>Tem espaço para <em>você</em> aqui. <span aria-hidden="true">🤍</span></h2>
+          <h2 className="reveal" style={staggerStyle(1)}>Tem espaço para <em>você</em> aqui. <Icon id="icon-heart" className="heading-accent" /></h2>
           <div className="about-content">
             <div className="about-text reveal">
               <p className="lead">Eu sou Jaqueline Lima, fisioterapeuta e quiropraxista. Acredito que cuidar é estar perto, ouvir com atenção e respeitar o tempo de cada pessoa.</p>
@@ -226,7 +226,7 @@ function App() {
         <section className="services-section" id="servicos">
           <div className="content-section">
             <div className="section-heading reveal"><div className="section-label"><span>02</span><span>Como posso ajudar</span></div><h2>Um cuidado que acompanha<br /><em>o seu ritmo.</em></h2><p>Atendimentos pensados para o que seu corpo precisa hoje.</p></div>
-            <div className="service-grid">{services.map(([number, title, description, icon], i) => <a className="service-card reveal" style={staggerStyle(i, 0.06)} key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta">Saiba mais <span aria-hidden="true" className="arrow">↗</span></span></a>)}</div>
+            <div className="service-grid">{services.map(([number, title, description, icon], i) => <a className="service-card reveal" style={staggerStyle(i, 0.06)} key={number} href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}><span className="service-icon-badge"><Icon id={icon} /></span><span className="service-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="service-cta btn-secondary">Saiba mais <Icon id="icon-arrow-up-right" /></span></a>)}</div>
           </div>
         </section>
 
@@ -242,7 +242,7 @@ function App() {
               <ul className="differentials-list">
                 {differentials.map((item, i) => <li key={item} className="reveal" style={staggerStyle(i)}><Icon id="icon-check" />{item}</li>)}
               </ul>
-              <a className="primary-button reveal" style={staggerStyle(differentials.length)} href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a>
+              <a className="primary-button reveal" style={staggerStyle(differentials.length)} href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <Icon id="icon-arrow-up-right" /></a>
             </div>
           </div>
         </section>
@@ -269,7 +269,7 @@ function App() {
               <div className="section-label"><span>05</span><span>Vamos conversar</span></div>
               <h2>Seu próximo passo<br />pode começar <em>agora.</em></h2>
               <p>Me conte como posso cuidar de você ou de quem você ama. O agendamento é feito de forma simples e gentil pelo WhatsApp.</p>
-              <a className="primary-button light-button" href={whatsappLink} target="_blank" rel="noreferrer"><Icon id="icon-chat" /> Falar pelo WhatsApp <span aria-hidden="true">↗</span></a>
+              <a className="primary-button light-button" href={whatsappLink} target="_blank" rel="noreferrer"><Icon id="icon-chat" /> Falar pelo WhatsApp <Icon id="icon-arrow-up-right" /></a>
             </div>
             <div className="contact-details">
               <div><span className="detail-label">WhatsApp</span><a href="tel:+5561996787399">(61) 99678-7399</a></div>
@@ -287,7 +287,7 @@ function App() {
         <div className="site-footer-inner">
           <span><Icon id="icon-heart" />Jaqueline Lima</span>
           <span>Fisioterapia e Quiropraxia · Padre Bernardo - GO</span>
-          <a href="#inicio">Voltar ao início ↑</a>
+          <a href="#inicio">Voltar ao início <Icon id="icon-arrow-up" /></a>
         </div>
         <div className="site-footer-credit">{'<prototype by Arthur>'}</div>
       </footer>
