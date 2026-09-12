@@ -120,14 +120,15 @@ const CREFITO_NUMERO = ''
 // Nenhuma outra mudança é necessária: os componentes já sabem exibir a imagem no lugar do placeholder.
 const PHOTOS = {
   hero: null,
-  consultorio: null,
+  minhaCasa: null,
   domiciliar: null,
   hospitalar: null,
   diferenciais: null,
 }
 
-// TODO: informações práticas do consultório — preencher quando disponíveis.
-const ENDERECO = '[endereço completo]'
+// Não há consultório/endereço fixo: a Jaqueline atende só na casa dela, na casa
+// do paciente ou no hospital, por isso não existe uma constante de endereço aqui.
+// TODO: informações práticas do atendimento — preencher quando disponíveis.
 const HORARIO = '[horário]'
 const CONVENIOS = '[convênios/particular]'
 
@@ -143,7 +144,7 @@ const services = [
   ['05', 'Fisioterapia Esportiva', 'Prevenção e reabilitação para você voltar ao que ama fazer.', 'icon-pulse'],
   ['06', 'Fisioterapia Pélvica / Gestante', 'Acolhimento e cuidado para as transformações de cada fase da gestação.', 'icon-two-hearts'],
   ['07', 'Fisioterapia Infantil', 'Fisioterapia neonatal e pediátrica com delicadeza para os pequenos.', 'icon-baby-bottle'],
-  ['08', 'Atendimento Domiciliar', 'O cuidado vai até você, com conforto, escuta e atenção individualizada.', 'icon-home', 'lg'],
+  ['08', 'Atendimento Domiciliar', 'O formato padrão de todo atendimento: na sua casa, na minha ou no hospital — sem consultório fixo, com o mesmo cuidado de sempre.', 'icon-home', 'lg'],
 ]
 
 const heroStats = [
@@ -156,7 +157,7 @@ const trustBadges = [
   CREFITO_NUMERO ? `CREFITO nº ${CREFITO_NUMERO}` : 'Fisioterapeuta registrada',
   'Atendimento humanizado',
   'Pós-graduada em Ortopedia e Neuro Neo/Ped',
-  'Consultório, hospitalar e domiciliar',
+  'Atendimento na sua casa ou na minha',
 ]
 
 // TODO: depoimentos fictícios para preencher o layout — substituir por depoimentos reais
@@ -167,11 +168,17 @@ const testimonials = [
   ['Beatriz A.', 'Fisioterapia Pélvica / Gestante', 'Um atendimento humano, atencioso e muito acolhedor durante toda a gestação. Recomendo de coração.'],
 ]
 
+// O atendimento domiciliar não é "mais um item" da lista — é o modelo padrão,
+// por isso ganha um destaque próprio (homeCareHighlight) acima do checklist.
+const homeCareHighlight = {
+  title: 'Atendimento 100% domiciliar',
+  text: 'Sem consultório fixo: o cuidado acontece no conforto da sua casa, na minha, ou no hospital quando for o caso — como for melhor pra você.',
+}
+
 const differentials = [
   'Atendimento humanizado e acolhedor, do primeiro contato ao retorno',
   'Atende todas as idades: idosos, bebês, crianças, gestantes, atletas e adultos',
   'Agendamento fácil e rápido pelo WhatsApp',
-  'Atendimento em consultório, hospitalar e domiciliar',
   'Profissional com pós-graduação em Ortopedia e Neuro Neo/Ped',
 ]
 
@@ -302,8 +309,8 @@ function App() {
               </div>
             </div>
             <div className="about-photos">
-              <PhotoPlaceholder label="Atendimento em consultório" shape="arch" tint="a" src={PHOTOS.consultorio} className="reveal" style={staggerStyle(0)} />
-              <PhotoPlaceholder label="Cuidado domiciliar" shape="arch" tint="b" src={PHOTOS.domiciliar} className="reveal" style={staggerStyle(1)} />
+              <PhotoPlaceholder label="Atendimento na minha casa" shape="arch" tint="a" src={PHOTOS.minhaCasa} className="reveal" style={staggerStyle(0)} />
+              <PhotoPlaceholder label="Cuidado na sua casa" shape="arch" tint="b" src={PHOTOS.domiciliar} className="reveal" style={staggerStyle(1)} />
               <PhotoPlaceholder label="Acompanhamento hospitalar" shape="arch" tint="c" src={PHOTOS.hospitalar} className="reveal" style={staggerStyle(2)} />
             </div>
           </div>
@@ -314,7 +321,7 @@ function App() {
             </div>
             <div className="pillar reveal" style={staggerStyle(1)}>
               <h3>Como trabalho</h3>
-              <p>Avaliação individual, escuta atenta e um plano de tratamento pensado para o seu corpo e o seu tempo, no consultório, no hospital ou na sua casa.</p>
+              <p>Avaliação individual, escuta atenta e um plano de tratamento pensado para o seu corpo e o seu tempo — na sua casa, na minha ou no hospital, sem consultório fixo.</p>
             </div>
           </div>
         </section>
@@ -335,10 +342,17 @@ function App() {
             <div className="differentials-text">
               <div className="section-label reveal"><span>03</span><span>Por que escolher</span></div>
               <h2 className="reveal" style={staggerStyle(1)}>Diferenciais que fazem<br /><em>a diferença.</em></h2>
+              <div className="home-care-highlight reveal" style={staggerStyle(2)}>
+                <span className="home-care-icon"><Icon id="icon-home" /></span>
+                <div className="home-care-copy">
+                  <strong>{homeCareHighlight.title}</strong>
+                  <p>{homeCareHighlight.text}</p>
+                </div>
+              </div>
               <ul className="differentials-list">
-                {differentials.map((item, i) => <li key={item} className="reveal" style={staggerStyle(i)}><Icon id="icon-check" />{item}</li>)}
+                {differentials.map((item, i) => <li key={item} className="reveal" style={staggerStyle(i + 3)}><Icon id="icon-check" />{item}</li>)}
               </ul>
-              <a className="primary-button reveal" style={staggerStyle(differentials.length)} href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <Icon id="icon-arrow-up-right" /></a>
+              <a className="primary-button reveal" style={staggerStyle(differentials.length + 3)} href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <Icon id="icon-arrow-up-right" /></a>
             </div>
           </div>
         </section>
@@ -369,10 +383,9 @@ function App() {
             </div>
             <div className="contact-details">
               <div><span className="detail-label">WhatsApp</span><a href="tel:+5561996787399">(61) 99678-7399</a></div>
-              <div><span className="detail-label">Onde estou</span><span>Padre Bernardo - GO</span></div>
-              <div><span className="detail-label">Endereço</span><span>{ENDERECO}</span></div>
+              <div><span className="detail-label">Área de atendimento</span><span>Padre Bernardo - GO</span></div>
               <div><span className="detail-label">Horário</span><span>{HORARIO}</span></div>
-              <div><span className="detail-label">Atendimento</span><span>Consultório, hospitalar e domiciliar</span></div>
+              <div><span className="detail-label">Atendimento</span><span>Domiciliar (sua casa ou a minha) e hospitalar</span></div>
               <div><span className="detail-label">Convênios</span><span>{CONVENIOS}</span></div>
             </div>
           </div>
