@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 
 const whatsappNumber = '5561996787399'
@@ -75,7 +76,7 @@ function Icon({ id, className }) {
 function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a', className = '', src, alt }) {
   const shapeClass = `photo-placeholder photo-placeholder--${shape} photo-placeholder--tint-${tint}${className ? ` ${className}` : ''}`
   if (src) {
-    return <img className={`${shapeClass} photo-placeholder--img`} src={src} alt={alt || label} />
+    return <img className={`${shapeClass} photo-placeholder--img`} src={src} alt={alt || label} loading="lazy" decoding="async" />
   }
   return (
     <div className={shapeClass}>
@@ -86,14 +87,39 @@ function PhotoPlaceholder({ label = 'Foto em breve', shape = 'blob', tint = 'a',
 }
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const closeMenu = () => setMenuOpen(false)
+
   return (
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Jaqueline Lima, início">
           <span className="brand-mark">JL</span><span className="brand-name">Jaqueline Lima</span>
         </a>
-        <nav aria-label="Navegação principal"><a href="#sobre">Sobre</a><a href="#servicos">Serviços</a><a href="#contato">Contato</a></nav>
-        <a className="header-cta" href={whatsappLink} target="_blank" rel="noreferrer">Agendar avaliação <span aria-hidden="true">↗</span></a>
+        <nav id="site-nav" className={menuOpen ? 'is-open' : ''} aria-label="Navegação principal">
+          <a href="#sobre" onClick={closeMenu}>Sobre</a>
+          <a href="#servicos" onClick={closeMenu}>Serviços</a>
+          <a href="#contato" onClick={closeMenu}>Contato</a>
+        </nav>
+        <div className="header-actions">
+          <a className="header-cta" href={whatsappLink} target="_blank" rel="noreferrer">
+            <span className="cta-full">Agendar avaliação</span>
+            <span className="cta-short">Agendar</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="site-nav"
+            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span className="menu-toggle-bar"></span>
+            <span className="menu-toggle-bar"></span>
+            <span className="menu-toggle-bar"></span>
+          </button>
+        </div>
       </header>
 
       <main>
@@ -114,7 +140,7 @@ function App() {
             <div className="art-ring art-ring-two"></div>
             <div className="art-photo-card">
               {PHOTOS.hero ? (
-                <img className="art-photo-img" src={PHOTOS.hero} alt="Jaqueline Lima" />
+                <img className="art-photo-img" src={PHOTOS.hero} alt="Jaqueline Lima" loading="eager" decoding="async" fetchPriority="high" />
               ) : (
                 <>
                   <span className="art-photo-icon"><Icon id="icon-camera" /></span>
