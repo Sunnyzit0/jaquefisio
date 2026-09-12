@@ -128,9 +128,9 @@ const PHOTOS = {
 // Não há consultório/endereço fixo: são exatamente 2 formas de atendimento —
 // na casa da Jaqueline ou na casa do paciente — por isso não existe uma
 // constante de endereço aqui, e nada no site deve mencionar uma 3ª opção.
-// TODO: informações práticas do atendimento — preencher quando disponíveis.
+// Sem convênio: atendimento é só particular, por isso não há campo de convênios.
+// TODO: horário de atendimento — preencher quando disponível.
 const HORARIO = '[horário]'
-const CONVENIOS = '[convênios/particular]'
 
 // O 5º campo quebra o grid uniforme: 'lg'/'md' dão mais presença aos serviços
 // que mais definem a Jaqueline (quiropraxia, geriátrica, domiciliar); o resto
@@ -332,6 +332,26 @@ function App() {
           </div>
         </section>
 
+        <section className="content-section pricing-section" id="valores">
+          <div className="section-label reveal"><span>03</span><span>Investimento</span></div>
+          <h2 className="reveal" style={staggerStyle(1)}>Cuidado sob medida,<br /><em>valor sob consulta.</em></h2>
+          <p className="pricing-intro reveal" style={staggerStyle(2)}>Os valores variam de acordo com a avaliação e o plano de cada pessoa, por isso ainda não estão fechados aqui. Me chama no WhatsApp que a gente conversa sobre o seu caso.</p>
+          <div className="pricing-table">
+            <div className="pricing-row pricing-row--head" aria-hidden="true">
+              <span>Serviço</span><span>O que inclui</span><span>Valor</span>
+            </div>
+            {services.map(([number, title, description, icon], i) => (
+              <div className="pricing-row reveal" style={staggerStyle(i, 0.05)} key={number}>
+                <div className="pricing-service"><span className="pricing-icon"><Icon id={icon} /></span><span>{title}</span></div>
+                <p className="pricing-desc">{description}</p>
+                <a className="pricing-value" href={waMessage(`Olá, gostaria de saber o valor de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Solicitar valor de ${title} pelo WhatsApp`}>
+                  <Icon id="icon-chat" />Consulte
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="content-section differentials-section" id="diferenciais">
           <div className="differentials-grid">
             <div className="differentials-photo reveal">
@@ -339,7 +359,7 @@ function App() {
               <PhotoPlaceholder label="Foto de Jaqueline Lima" shape="blob" tint="b" src={PHOTOS.diferenciais} />
             </div>
             <div className="differentials-text">
-              <div className="section-label reveal"><span>03</span><span>Por que escolher</span></div>
+              <div className="section-label reveal"><span>04</span><span>Por que escolher</span></div>
               <h2 className="reveal" style={staggerStyle(1)}>Diferenciais que fazem<br /><em>a diferença.</em></h2>
               <div className="home-care-highlight reveal" style={staggerStyle(2)}>
                 <span className="home-care-icon"><Icon id="icon-home" /></span>
@@ -357,7 +377,7 @@ function App() {
         </section>
 
         <section className="content-section testimonials-section" id="depoimentos">
-          <div className="section-label reveal"><span>04</span><span>O que dizem</span></div>
+          <div className="section-label reveal"><span>05</span><span>O que dizem</span></div>
           <h2 className="reveal" style={staggerStyle(1)}>O que dizem<br /><em>sobre mim.</em></h2>
           <div className="testimonials-grid">
             {testimonials.map(([name, role, text], i) => (
@@ -375,7 +395,7 @@ function App() {
           <span className="blob blob-contact" aria-hidden="true"></span>
           <div className="contact-card reveal">
             <div className="contact-main">
-              <div className="section-label"><span>05</span><span>Vamos conversar</span></div>
+              <div className="section-label"><span>06</span><span>Vamos conversar</span></div>
               <h2>Seu próximo passo<br />pode começar <em>agora.</em></h2>
               <p>Me conte como posso cuidar de você ou de quem você ama. O agendamento é feito de forma simples e gentil pelo WhatsApp.</p>
               <a className="primary-button light-button" href={whatsappLink} target="_blank" rel="noreferrer"><Icon id="icon-chat" /> Falar pelo WhatsApp <Icon id="icon-arrow-up-right" /></a>
@@ -385,7 +405,6 @@ function App() {
               <div><span className="detail-label">Área de atendimento</span><span>Padre Bernardo - GO</span></div>
               <div><span className="detail-label">Horário</span><span>{HORARIO}</span></div>
               <div><span className="detail-label">Atendimento</span><span>Domiciliar: na sua casa ou na minha</span></div>
-              <div><span className="detail-label">Convênios</span><span>{CONVENIOS}</span></div>
             </div>
           </div>
         </section>
