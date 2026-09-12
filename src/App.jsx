@@ -122,12 +122,12 @@ const PHOTOS = {
   hero: null,
   minhaCasa: null,
   domiciliar: null,
-  hospitalar: null,
   diferenciais: null,
 }
 
-// Não há consultório/endereço fixo: a Jaqueline atende só na casa dela, na casa
-// do paciente ou no hospital, por isso não existe uma constante de endereço aqui.
+// Não há consultório/endereço fixo: são exatamente 2 formas de atendimento —
+// na casa da Jaqueline ou na casa do paciente — por isso não existe uma
+// constante de endereço aqui, e nada no site deve mencionar uma 3ª opção.
 // TODO: informações práticas do atendimento — preencher quando disponíveis.
 const HORARIO = '[horário]'
 const CONVENIOS = '[convênios/particular]'
@@ -140,16 +140,16 @@ const services = [
   ['01', 'Quiropraxia', 'Realinhamento da coluna para devolver mais leveza e liberdade ao movimento.', 'icon-spine', 'lg'],
   ['02', 'Fisioterapia Ortopédica', 'Cuidado próximo para dores, lesões e recuperação do dia a dia.', 'icon-cross'],
   ['03', 'Fisioterapia Neurológica', 'Acompanhamento atento para recuperar funções e fortalecer a autonomia.', 'icon-spark-head', 'md'],
-  ['04', 'Fisioterapia Geriátrica', 'Atendimento hospitalar e domiciliar para idosos viverem com mais segurança.', 'icon-cane', 'md'],
+  ['04', 'Fisioterapia Geriátrica', 'Atendimento domiciliar para idosos viverem com mais segurança e autonomia em casa.', 'icon-cane', 'md'],
   ['05', 'Fisioterapia Esportiva', 'Prevenção e reabilitação para você voltar ao que ama fazer.', 'icon-pulse'],
   ['06', 'Fisioterapia Pélvica / Gestante', 'Acolhimento e cuidado para as transformações de cada fase da gestação.', 'icon-two-hearts'],
   ['07', 'Fisioterapia Infantil', 'Fisioterapia neonatal e pediátrica com delicadeza para os pequenos.', 'icon-baby-bottle'],
-  ['08', 'Atendimento Domiciliar', 'O formato padrão de todo atendimento: na sua casa, na minha ou no hospital — sem consultório fixo, com o mesmo cuidado de sempre.', 'icon-home', 'lg'],
+  ['08', 'Atendimento Domiciliar', 'O formato padrão de todo atendimento: na sua casa ou na minha — sem consultório fixo, com o mesmo cuidado de sempre.', 'icon-home', 'lg'],
 ]
 
 const heroStats = [
   [`${services.length}+`, 'áreas de atuação'],
-  ['3', 'formas de atendimento'],
+  ['2', 'formas de atendimento'],
   ['2', 'pós-graduações especializadas'],
 ]
 
@@ -172,7 +172,7 @@ const testimonials = [
 // por isso ganha um destaque próprio (homeCareHighlight) acima do checklist.
 const homeCareHighlight = {
   title: 'Atendimento 100% domiciliar',
-  text: 'Sem consultório fixo: o cuidado acontece no conforto da sua casa, na minha, ou no hospital quando for o caso — como for melhor pra você.',
+  text: 'Sem consultório fixo: o cuidado acontece no conforto da sua casa ou na minha — como for melhor pra você.',
 }
 
 const differentials = [
@@ -308,10 +308,9 @@ function App() {
                 <span><Icon id="icon-baby-bottle" />Neo/Ped</span>
               </div>
             </div>
-            <div className="about-photos">
+            <div className="about-photos about-photos--duo">
               <PhotoPlaceholder label="Atendimento na minha casa" shape="arch" tint="a" src={PHOTOS.minhaCasa} className="reveal" style={staggerStyle(0)} />
               <PhotoPlaceholder label="Cuidado na sua casa" shape="arch" tint="b" src={PHOTOS.domiciliar} className="reveal" style={staggerStyle(1)} />
-              <PhotoPlaceholder label="Acompanhamento hospitalar" shape="arch" tint="c" src={PHOTOS.hospitalar} className="reveal" style={staggerStyle(2)} />
             </div>
           </div>
           <div className="about-pillars">
@@ -321,7 +320,7 @@ function App() {
             </div>
             <div className="pillar reveal" style={staggerStyle(1)}>
               <h3>Como trabalho</h3>
-              <p>Avaliação individual, escuta atenta e um plano de tratamento pensado para o seu corpo e o seu tempo — na sua casa, na minha ou no hospital, sem consultório fixo.</p>
+              <p>Avaliação individual, escuta atenta e um plano de tratamento pensado para o seu corpo e o seu tempo — na sua casa ou na minha, sem consultório fixo.</p>
             </div>
           </div>
         </section>
@@ -385,7 +384,7 @@ function App() {
               <div><span className="detail-label">WhatsApp</span><a href="tel:+5561996787399">(61) 99678-7399</a></div>
               <div><span className="detail-label">Área de atendimento</span><span>Padre Bernardo - GO</span></div>
               <div><span className="detail-label">Horário</span><span>{HORARIO}</span></div>
-              <div><span className="detail-label">Atendimento</span><span>Domiciliar (sua casa ou a minha) e hospitalar</span></div>
+              <div><span className="detail-label">Atendimento</span><span>Domiciliar: na sua casa ou na minha</span></div>
               <div><span className="detail-label">Convênios</span><span>{CONVENIOS}</span></div>
             </div>
           </div>

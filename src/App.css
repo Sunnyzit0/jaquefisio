@@ -194,6 +194,10 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 
 .about-photos { align-items: flex-start; display: flex; gap: 16px; }
 .about-photos .photo-placeholder { flex: 1; min-width: 0; }
+/* only 2 real forms of care (her place / the patient's) means only 2 photos here —
+   cap their width instead of letting flex:1 stretch each to half the row. */
+.about-photos--duo { justify-content: center; }
+.about-photos--duo .photo-placeholder { flex: 0 1 240px; }
 
 /* reusable photo placeholder */
 .photo-placeholder { align-items: center; background: linear-gradient(155deg, var(--surface), var(--surface-tint) 150%); box-shadow: 0 25px 50px -22px var(--shadow-color); color: var(--muted); display: flex; flex-direction: column; gap: 10px; justify-content: center; padding: 22px; position: relative; text-align: center; z-index: 1; }
@@ -371,5 +375,6 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
   .cta-short { display: inline; }
   .hero-intro { font-size: 18px; }
   .about-photos { flex-direction: column; }
+  .about-photos--duo .photo-placeholder { flex: 1; }
   .service-card { min-height: 220px; }
 }
