@@ -161,7 +161,7 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .art-ring { border: 2px solid var(--accent); border-radius: 50%; opacity: .5; position: absolute; z-index: 1; }
 .art-ring-one { height: 68%; left: 16%; top: 16%; width: 68%; }
 .art-ring-two { border-color: rgba(137, 35, 91, .35); height: 90%; left: 5%; top: 5%; width: 90%; }
-.art-photo-card { align-items: center; background: linear-gradient(155deg, var(--surface), var(--surface-tint) 150%); border-radius: var(--radius-lg); box-shadow: 0 30px 60px -22px var(--shadow-color); display: flex; flex-direction: column; inset: 8%; justify-content: center; overflow: hidden; padding: 20px; position: absolute; text-align: center; z-index: 2; }
+.art-photo-card { align-items: center; background: linear-gradient(155deg, var(--surface), var(--surface-tint) 150%); border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%; box-shadow: 0 30px 60px -22px var(--shadow-color); display: flex; flex-direction: column; inset: 15%; justify-content: center; overflow: hidden; padding: 20px; position: absolute; text-align: center; z-index: 2; }
 .art-photo-img { border-radius: inherit; height: 100%; object-fit: cover; width: 100%; }
 .art-photo-icon { align-items: center; background: rgba(255,255,255,.6); border-radius: 50%; box-shadow: 0 10px 22px -12px var(--shadow-color); display: flex; height: 60px; justify-content: center; margin-bottom: 14px; width: 60px; }
 .art-photo-icon .icon { color: var(--accent); height: 26px; opacity: .8; width: 26px; }
@@ -205,10 +205,8 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .photo-placeholder-icon { align-items: center; background: rgba(255,255,255,.6); border-radius: 50%; box-shadow: 0 10px 22px -12px var(--shadow-color); display: flex; height: 56px; justify-content: center; width: 56px; }
 .photo-placeholder-icon .icon { color: var(--accent); height: 24px; opacity: .8; width: 24px; }
 .photo-placeholder-label { font-size: 13px; font-weight: 700; line-height: 1.4; }
-/* simple, consistent rounded corners — no organic/arch cutouts, which distorted
-   unpredictably at small mobile widths. Only the aspect ratio still varies. */
-.photo-placeholder--blob { aspect-ratio: 1; border-radius: var(--radius-lg); }
-.photo-placeholder--arch { aspect-ratio: 3 / 4; border-radius: var(--radius-lg); }
+.photo-placeholder--blob { aspect-ratio: 1; border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%; }
+.photo-placeholder--arch { aspect-ratio: 3 / 4; border-radius: 50% 50% var(--radius-sm) var(--radius-sm); }
 .photo-placeholder--tint-b { background: linear-gradient(155deg, var(--surface), rgba(137, 35, 91, .18) 150%); }
 .photo-placeholder--tint-c { background: linear-gradient(155deg, var(--surface-tint), var(--surface) 150%); }
 .photo-placeholder--img { display: block; object-fit: cover; padding: 0; width: 100%; }
@@ -372,7 +370,8 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
   .content-section { padding: 80px 20px; }
   .about-content { display: block; }
   .about-text { margin: 0 auto; }
-  .about-photos { margin-top: 45px; max-width: 420px; }
+  .about-photos { align-items: stretch; flex-direction: column; margin-top: 45px; max-width: 420px; }
+  .about-photos--duo .photo-placeholder { flex: 1; }
   .about-pillars { gap: 40px; grid-template-columns: 1fr; margin-top: 50px; padding-top: 45px; }
   .section-heading { display: block; }
   .section-heading .section-label { margin-bottom: 38px; }
@@ -395,7 +394,5 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
   .cta-full { display: none; }
   .cta-short { display: inline; }
   .hero-intro { font-size: 18px; }
-  .about-photos { flex-direction: column; }
-  .about-photos--duo .photo-placeholder { flex: 1; }
   .service-card { min-height: 220px; }
 }
