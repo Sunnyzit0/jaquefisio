@@ -206,7 +206,7 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .photo-placeholder-icon .icon { color: var(--accent); height: 24px; opacity: .8; width: 24px; }
 .photo-placeholder-label { font-size: 13px; font-weight: 700; line-height: 1.4; }
 .photo-placeholder--blob { aspect-ratio: 1; border-radius: 42% 58% 65% 35% / 45% 45% 55% 55%; }
-.photo-placeholder--arch { aspect-ratio: 3 / 4; border-radius: 50% 50% var(--radius-sm) var(--radius-sm); }
+.photo-placeholder--arch { aspect-ratio: 3 / 4; border-radius: var(--radius-lg); }
 .photo-placeholder--tint-b { background: linear-gradient(155deg, var(--surface), rgba(137, 35, 91, .18) 150%); }
 .photo-placeholder--tint-c { background: linear-gradient(155deg, var(--surface-tint), var(--surface) 150%); }
 .photo-placeholder--img { display: block; object-fit: cover; padding: 0; width: 100%; }
