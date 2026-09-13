@@ -344,9 +344,12 @@ function App() {
               <div className="pricing-row reveal" style={staggerStyle(i, 0.05)} key={number}>
                 <div className="pricing-service"><span className="pricing-icon"><Icon id={icon} /></span><span>{title}</span></div>
                 <p className="pricing-desc">{description}</p>
-                <a className="pricing-value" href={waMessage(`Olá, gostaria de saber o valor de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Solicitar valor de ${title} pelo WhatsApp`}>
-                  <Icon id="icon-chat" />Consulte
-                </a>
+                <div className="pricing-price">
+                  <span className="pricing-placeholder">{'{valor}'}</span>
+                  <a className="pricing-value" href={waMessage(`Olá, gostaria de saber o valor de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Solicitar valor de ${title} pelo WhatsApp`}>
+                    <Icon id="icon-chat" />Consulte
+                  </a>
+                </div>
               </div>
             ))}
           </div>
