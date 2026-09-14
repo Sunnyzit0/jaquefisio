@@ -340,6 +340,19 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .site-footer-inner .icon { color: var(--accent); height: 15px; width: 15px; }
 .site-footer-credit { color: var(--muted); font-size: 11px; letter-spacing: .3px; padding: 0 40px 22px; text-align: center; }
 
+/* floating scroll-to-top button */
+.scroll-top-btn { align-items: center; background: radial-gradient(140% 160% at 20% 15%, var(--accent-light), var(--accent) 65%); border: 2px solid var(--accent); border-radius: 50%; bottom: 28px; box-shadow: 0 14px 30px -14px var(--shadow-color); color: var(--accent-contrast); cursor: pointer; display: flex; height: 50px; justify-content: center; opacity: 0; pointer-events: none; position: fixed; right: 28px; transform: translateY(14px); transition: background .25s var(--ease-ios), opacity .3s var(--ease-ios), transform .3s var(--ease-ios); width: 50px; z-index: 55; }
+.scroll-top-btn.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.scroll-top-btn:hover { background: radial-gradient(140% 160% at 20% 15%, var(--ink), var(--ink) 65%); border-color: var(--ink); color: var(--bg-alt); transform: translateY(-3px); }
+.scroll-top-btn.is-visible:active { transform: scale(.94); transition-duration: .1s; }
+.scroll-top-btn .icon { height: 20px; width: 20px; }
+@media (prefers-reduced-motion: reduce) {
+  .scroll-top-btn { transition: opacity .3s var(--ease-ios); }
+}
+@media (max-width: 800px) {
+  .scroll-top-btn { bottom: 20px; height: 46px; right: 20px; width: 46px; }
+}
+
 @media (max-width: 900px) {
   .service-grid { grid-template-columns: repeat(2, 1fr); }
   .service-card, .service-card--md, .service-card--lg { grid-column: span 1; }

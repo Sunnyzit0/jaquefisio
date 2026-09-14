@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página não encontrada | Jaqueline Lima</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="robots" content="noindex" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      align-items: center;
+      background-color: #ffcae4;
+      background-image:
+        radial-gradient(130% 100% at 88% 10%, rgba(241, 2, 145, .16), rgba(137, 35, 91, .05) 45%, transparent 72%),
+        url(/pattern-signature.svg);
+      background-repeat: no-repeat, repeat;
+      background-size: cover, 220px 220px;
+      display: flex;
+      font: 18px/1.45 'Trebuchet MS', Verdana, sans-serif;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #fff3f2;
+      border-radius: 30px;
+      box-shadow: 0 30px 60px -22px rgba(137, 35, 91, .28);
+      max-width: 560px;
+      padding: 64px 48px;
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+    .badge {
+      align-items: center;
+      background: #ffcae4;
+      border-radius: 50%;
+      display: inline-flex;
+      height: 64px;
+      justify-content: center;
+      margin-bottom: 28px;
+      width: 64px;
+    }
+    .badge svg { color: #f10291; height: 30px; width: 30px; }
+    h1 {
+      color: #250209;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2rem, 1.4rem + 3vw, 3.2rem);
+      font-weight: 400;
+      letter-spacing: -.02em;
+      line-height: 1.08;
+      margin: 0 0 18px;
+    }
+    h1 em { color: #89235b; font-style: normal; font-weight: 700; }
+    p {
+      color: #89235b;
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0 0 36px;
+    }
+    .home-link {
+      align-items: center;
+      background: radial-gradient(140% 160% at 20% 15%, #ff4fb0, #f10291 65%);
+      border: 2px solid #f10291;
+      border-radius: 999px;
+      color: #250209;
+      display: inline-flex;
+      font-size: 15px;
+      font-weight: 700;
+      gap: 10px;
+      padding: 15px 28px;
+      text-decoration: none;
+      transition: transform .25s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .home-link:hover { transform: translateY(-2px); }
+    .home-link:active { transform: scale(.97); }
+    .home-link svg { height: 16px; width: 16px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.4 14.2 12 21l-7.4-6.8a5 5 0 1 1 7.4-6.7 5 5 0 1 1 7.4 6.7Z"/></svg>
+    </span>
+    <h1>Ops, essa página<br /><em>não existe.</em></h1>
+    <p>Parece que você seguiu um link que não existe mais ou digitou o endereço errado. Vamos te levar de volta para um lugar seguro.</p>
+    <a class="home-link" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>
+      Voltar para o início
+    </a>
+  </div>
+</body>
+</html>

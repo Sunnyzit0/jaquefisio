@@ -59,6 +59,26 @@ function useScrollProgress() {
   return progress
 }
 
+function useScrollToTopVisible(threshold = 560) {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    let ticking = false
+    const update = () => {
+      setVisible(window.scrollY > threshold)
+      ticking = false
+    }
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [threshold])
+  return visible
+}
+
 // Subtle parallax on the hero illustration: it lags behind the page scroll,
 // giving the hero a sense of depth instead of moving 1:1 with the text.
 function useHeroParallax(ref) {
@@ -210,8 +230,10 @@ function App() {
   const cursorRef = useRef(null)
   useScrollReveal()
   const progress = useScrollProgress()
+  const showScrollTop = useScrollToTopVisible()
   useHeroParallax(heroArtRef)
   useCustomCursor(cursorRef)
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
 
   return (
     <div className="site-shell">
@@ -421,6 +443,17 @@ function App() {
         </div>
         <div className="site-footer-credit">{'<prototype by Arthur>'}</div>
       </footer>
+
+      <button
+        type="button"
+        className={`scroll-top-btn${showScrollTop ? ' is-visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Voltar ao topo"
+        aria-hidden={!showScrollTop}
+        tabIndex={showScrollTop ? 0 : -1}
+      >
+        <Icon id="icon-arrow-up" />
+      </button>
     </div>
   )
 }
