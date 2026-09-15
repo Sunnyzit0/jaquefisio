@@ -353,8 +353,32 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .site-footer-inner .icon { color: var(--accent); height: 15px; width: 15px; }
 .site-footer-credit { color: var(--muted); font-size: 11px; letter-spacing: .3px; padding: 0 40px 22px; text-align: center; }
 
-/* floating scroll-to-top button */
-.scroll-top-btn { align-items: center; background: radial-gradient(140% 160% at 20% 15%, var(--accent-light), var(--accent) 65%); border: 2px solid var(--accent); border-radius: 50%; bottom: 28px; box-shadow: 0 14px 30px -14px var(--shadow-color), 0 0 22px -6px var(--glow-accent); color: var(--accent-contrast); cursor: pointer; display: flex; height: 50px; justify-content: center; opacity: 0; pointer-events: none; position: fixed; right: 28px; transform: translateY(14px); transition: background .25s var(--ease-ios), opacity .3s var(--ease-ios), transform .3s var(--ease-ios); width: 50px; z-index: 55; }
+/* floating WhatsApp button — present on every page, official brand glyph + green,
+   with a one-shot pop-in on load and a gentle recurring pulse to draw the eye
+   without being obnoxious about it. */
+.whatsapp-float { align-items: center; animation: whatsapp-pop-in .6s var(--ease-ios) .3s both, whatsapp-pulse 2.8s ease-out 1.2s infinite; background: radial-gradient(140% 160% at 20% 15%, #2fe070, #25d366 65%); border-radius: 50%; bottom: 28px; color: #fff; cursor: pointer; display: flex; height: 60px; justify-content: center; position: fixed; right: 28px; transition: transform .25s var(--ease-ios); width: 60px; z-index: 56; }
+.whatsapp-float:hover { transform: scale(1.08); }
+.whatsapp-float:active { transform: scale(.94); transition-duration: .1s; }
+.whatsapp-float .icon { height: 30px; width: 30px; }
+@keyframes whatsapp-pop-in {
+  from { opacity: 0; transform: scale(.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes whatsapp-pulse {
+  0% { box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .5), 0 0 0 0 rgba(37, 211, 102, .55); }
+  70% { box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .5), 0 0 0 16px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .5), 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float { animation: none; box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .5); }
+}
+@media (max-width: 800px) {
+  .whatsapp-float { bottom: 20px; height: 52px; right: 20px; width: 52px; }
+  .whatsapp-float .icon { height: 26px; width: 26px; }
+}
+
+/* floating scroll-to-top button — stacked above the WhatsApp button so they never overlap */
+.scroll-top-btn { align-items: center; background: radial-gradient(140% 160% at 20% 15%, var(--accent-light), var(--accent) 65%); border: 2px solid var(--accent); border-radius: 50%; bottom: 102px; box-shadow: 0 14px 30px -14px var(--shadow-color), 0 0 22px -6px var(--glow-accent); color: var(--accent-contrast); cursor: pointer; display: flex; height: 50px; justify-content: center; opacity: 0; pointer-events: none; position: fixed; right: 28px; transform: translateY(14px); transition: background .25s var(--ease-ios), opacity .3s var(--ease-ios), transform .3s var(--ease-ios); width: 50px; z-index: 55; }
 .scroll-top-btn.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .scroll-top-btn:hover { background: radial-gradient(140% 160% at 20% 15%, var(--bg-alt), var(--bg) 65%); border-color: var(--bg); color: var(--ink); transform: translateY(-3px); }
 .scroll-top-btn.is-visible:active { transform: scale(.94); transition-duration: .1s; }
@@ -363,7 +387,7 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
   .scroll-top-btn { transition: opacity .3s var(--ease-ios); }
 }
 @media (max-width: 800px) {
-  .scroll-top-btn { bottom: 20px; height: 46px; right: 20px; width: 46px; }
+  .scroll-top-btn { bottom: 84px; height: 46px; right: 20px; width: 46px; }
 }
 
 @media (max-width: 900px) {

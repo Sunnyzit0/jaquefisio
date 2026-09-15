@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import Icon from './components/Icon.jsx'
-import { whatsappLink } from './lib/data.js'
+import { waMessage, whatsappLink } from './lib/data.js'
 import { prefersReducedMotion, useCustomCursor, useScrollProgress, useScrollToTopVisible } from './lib/hooks.js'
 
 // Header, footer and the whole-viewport effects (scroll progress, cursor, scroll-to-top)
@@ -66,6 +66,16 @@ export default function Layout() {
         </div>
         <div className="site-footer-credit">{'<prototype by Arthur>'}</div>
       </footer>
+
+      <a
+        className="whatsapp-float"
+        href={waMessage('Olá! Gostaria de agendar uma avaliação.')}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Falar no WhatsApp"
+      >
+        <Icon id="icon-whatsapp" />
+      </a>
 
       <button
         type="button"

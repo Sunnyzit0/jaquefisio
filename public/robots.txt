@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: substituir "[dominio-do-site]" pelo domínio real assim que o deploy for definido.
+Sitemap: https://[dominio-do-site]/sitemap.xml
