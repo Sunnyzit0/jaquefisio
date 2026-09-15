@@ -282,13 +282,11 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .pricing-icon { align-items: center; background: var(--surface-tint); border-radius: 50%; color: var(--accent); display: flex; flex-shrink: 0; height: 40px; justify-content: center; width: 40px; }
 .pricing-icon .icon { height: 20px; width: 20px; }
 .pricing-desc { color: var(--muted); font-size: 15px; line-height: 1.5; }
-.pricing-price { align-items: flex-end; display: flex; flex-direction: column; gap: 8px; justify-self: end; }
-.pricing-placeholder { background: repeating-linear-gradient(135deg, rgba(120, 120, 120, .12), rgba(120, 120, 120, .12) 5px, transparent 5px, transparent 10px); border: 1px dashed var(--muted); border-radius: var(--radius-pill); color: var(--muted); font-family: 'Courier New', monospace; font-size: 12.5px; font-weight: 700; letter-spacing: .5px; padding: 5px 12px; }
-.pricing-value { align-items: center; background: var(--surface-tint); border-radius: var(--radius-pill); color: var(--ink); display: inline-flex; flex-shrink: 0; font-size: 14px; font-weight: 700; gap: 8px; padding: 11px 18px; text-decoration: none; transition: background .25s var(--ease-ios), color .25s var(--ease-ios), transform .25s var(--ease-ios); }
-.pricing-value .icon { color: var(--accent); height: 16px; transition: color .25s var(--ease-ios); width: 16px; }
-.pricing-value:hover { background: var(--accent); color: var(--accent-contrast); }
-.pricing-value:hover .icon { color: var(--accent-contrast); }
-.pricing-value:active { transform: scale(.97); transition-duration: .1s; }
+.pricing-cta { align-items: center; background: var(--surface-tint); border-radius: var(--radius-pill); color: var(--ink); display: inline-flex; flex-shrink: 0; font-size: 14px; font-weight: 700; gap: 8px; justify-self: end; padding: 11px 18px; text-decoration: none; transition: background .25s var(--ease-ios), color .25s var(--ease-ios), transform .25s var(--ease-ios); }
+.pricing-cta .icon { color: var(--accent); height: 16px; transition: color .25s var(--ease-ios); width: 16px; }
+.pricing-cta:hover { background: var(--accent); color: var(--accent-contrast); }
+.pricing-cta:hover .icon { color: var(--accent-contrast); }
+.pricing-cta:active { transform: scale(.97); transition-duration: .1s; }
 
 /* differentials */
 .differentials-section { background: var(--bg-alt); }
@@ -396,7 +394,7 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
   .differentials-photo { margin: 0 auto 20px; max-width: 300px; }
   .pricing-row--head { display: none; }
   .pricing-row { align-items: flex-start; gap: 14px; grid-template-columns: 1fr; padding: 22px; }
-  .pricing-price { align-items: flex-start; justify-self: start; }
+  .pricing-cta { justify-self: start; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .contact-card { padding: 32px; }
   .site-footer-inner { align-items: flex-start; flex-direction: column; padding: 25px 20px; }

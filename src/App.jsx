@@ -355,23 +355,20 @@ function App() {
         </section>
 
         <section className="content-section pricing-section" id="valores">
-          <div className="section-label reveal"><span>03</span><span>Investimento</span></div>
-          <h2 className="reveal" style={staggerStyle(1)}>Cuidado sob medida,<br /><em>valor sob consulta.</em></h2>
-          <p className="pricing-intro reveal" style={staggerStyle(2)}>Os valores variam de acordo com a avaliação e o plano de cada pessoa, por isso ainda não estão fechados aqui. Me chama no WhatsApp que a gente conversa sobre o seu caso.</p>
+          <div className="section-label reveal"><span>03</span><span>Serviços em detalhe</span></div>
+          <h2 className="reveal" style={staggerStyle(1)}>Conheça cada<br /><em>atendimento de perto.</em></h2>
+          <p className="pricing-intro reveal" style={staggerStyle(2)}>Cada atendimento é pensado para o seu momento. Me chama no WhatsApp e conversamos sobre o que faz mais sentido para você.</p>
           <div className="pricing-table">
             <div className="pricing-row pricing-row--head" aria-hidden="true">
-              <span>Serviço</span><span>O que inclui</span><span>Valor</span>
+              <span>Serviço</span><span>O que inclui</span><span>Agendar</span>
             </div>
             {services.map(([number, title, description, icon], i) => (
               <div className="pricing-row reveal" style={staggerStyle(i, 0.05)} key={number}>
                 <div className="pricing-service"><span className="pricing-icon"><Icon id={icon} /></span><span>{title}</span></div>
                 <p className="pricing-desc">{description}</p>
-                <div className="pricing-price">
-                  <span className="pricing-placeholder">{'{valor}'}</span>
-                  <a className="pricing-value" href={waMessage(`Olá, gostaria de saber o valor de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Solicitar valor de ${title} pelo WhatsApp`}>
-                    <Icon id="icon-chat" />Consulte
-                  </a>
-                </div>
+                <a className="pricing-cta" href={waMessage(`Olá, gostaria de agendar uma avaliação de ${title}.`)} target="_blank" rel="noreferrer" aria-label={`Agendar avaliação de ${title} pelo WhatsApp`}>
+                  <Icon id="icon-chat" />Agendar avaliação
+                </a>
               </div>
             ))}
           </div>
