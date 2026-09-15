@@ -97,7 +97,8 @@ a { color: inherit; }
 /* header */
 .site-header { align-items: center; border-bottom: 1px solid var(--line); display: flex; gap: 32px; justify-content: space-between; margin: 0 auto; max-width: 1240px; padding: 24px 40px; position: relative; }
 .brand { align-items: center; display: flex; gap: 12px; min-height: 44px; text-decoration: none; }
-.brand-mark { align-items: center; background: var(--accent); border-radius: 50%; box-shadow: 0 10px 22px -12px var(--shadow-color); color: var(--accent-contrast); display: flex; flex-shrink: 0; font: 700 15px/1 var(--serif); height: 42px; justify-content: center; width: 42px; }
+.brand-mark { align-items: center; background: var(--accent); border-radius: 50%; box-shadow: 0 10px 22px -12px var(--shadow-color); display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px; }
+.brand-mark img { height: 26px; object-fit: contain; width: 26px; }
 .brand-name { font-size: 18px; font-weight: 700; letter-spacing: .2px; }
 nav { display: flex; gap: 32px; margin-left: auto; }
 nav a, .site-footer a { color: var(--muted); font-size: 16px; text-decoration: none; transition: color .2s var(--ease-ios); }
@@ -349,6 +350,8 @@ h1 em, h2 em { color: var(--muted); font-style: normal; font-weight: 700; }
 .site-footer { background-color: var(--bg-alt); background-image: url(/pattern-signature.svg); background-repeat: repeat; background-size: 200px 200px; }
 .site-footer-inner { align-items: center; color: var(--muted); display: flex; flex-wrap: wrap; font-size: 16px; gap: 12px 20px; justify-content: space-between; margin: 0 auto; max-width: 1240px; padding: 30px 40px; }
 .site-footer-inner span:first-child { align-items: center; color: var(--ink); display: inline-flex; font-weight: 700; gap: 8px; }
+.footer-mark { align-items: center; background: var(--accent); border-radius: 50%; display: inline-flex; flex-shrink: 0; height: 24px; justify-content: center; width: 24px; }
+.footer-mark img { height: 15px; object-fit: contain; width: 15px; }
 .site-footer-inner a { align-items: center; display: inline-flex; gap: 6px; min-height: 44px; }
 .site-footer-inner .icon { color: var(--accent); height: 15px; width: 15px; }
 .site-footer-credit { color: var(--muted); font-size: 11px; letter-spacing: .3px; padding: 0 40px 22px; text-align: center; }

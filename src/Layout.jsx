@@ -26,7 +26,7 @@ export default function Layout() {
       </div>
       <header className="site-header">
         <Link className="brand" to="/" aria-label="Jaqueline Lima, início">
-          <span className="brand-mark">JL</span><span className="brand-name">Jaqueline Lima</span>
+          <span className="brand-mark"><img src="/logo.png" alt="" /></span><span className="brand-name">Jaqueline Lima</span>
         </Link>
         <nav id="site-nav" className={menuOpen ? 'is-open' : ''} aria-label="Navegação principal">
           <a href="/#sobre" onClick={closeMenu}>Sobre</a>
@@ -60,7 +60,7 @@ export default function Layout() {
 
       <footer className="site-footer">
         <div className="site-footer-inner">
-          <span><Icon id="icon-heart" />Jaqueline Lima</span>
+          <span><span className="footer-mark"><img src="/logo.png" alt="" /></span>Jaqueline Lima</span>
           <span>Fisioterapia e Quiropraxia · Padre Bernardo - GO</span>
           <a href="/#inicio">Voltar ao início <Icon id="icon-arrow-up" /></a>
         </div>
