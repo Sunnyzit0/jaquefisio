@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-rich-mahogany: #250209;
-  --color-dark-raspberry: #89235b;
-  --color-electric-rose: #f10291;
-  --color-pastel-petal: #ffcae4;
-  --color-snow: #fff3f2;
+  --color-deep-black-green: #051f20;
+  --color-dark-green: #0b2b26;
+  --color-forest-green: #163832;
+  --color-moss-green: #235347;
+  --color-sage-green: #8eb69b;
+  --color-mint-white: #daf1de;
 }
 
 :root {
   font: 18px/1.45 'Trebuchet MS', Verdana, sans-serif;
-  color-scheme: light;
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
