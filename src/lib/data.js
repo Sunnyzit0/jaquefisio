@@ -52,16 +52,6 @@ export const trustBadges = [
   'Atendimento na sua casa ou na minha',
 ]
 
-// Comentários reais recebidos no Instagram da Jaqueline. Sem nomes reais por
-// privacidade (a menos que a paciente autorize depois) — daí o nome genérico
-// "Paciente atendido(a)" em todos. O 3º é um placeholder para a Dra. Jaqueline
-// enviar outro comentário real depois.
-export const testimonials = [
-  { text: 'Mãozinhas abençoadas que eu amo', name: 'Paciente atendido(a)' },
-  { text: 'A melhor fisio da vida', name: 'Paciente atendido(a)' },
-  { text: '[Depoimento a preencher pela Dra. Jaqueline]', name: 'Paciente atendido(a)' },
-]
-
 // O atendimento domiciliar não é "mais um item" da lista — é o modelo padrão,
 // por isso ganha um destaque próprio (homeCareHighlight) acima do checklist.
 export const homeCareHighlight = {

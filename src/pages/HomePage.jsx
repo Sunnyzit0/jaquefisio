@@ -1,9 +1,9 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
 import PhotoPlaceholder from '../components/PhotoPlaceholder.jsx'
 import {
-  PHOTOS, HORARIO, services, heroStats, trustBadges, testimonials,
+  PHOTOS, HORARIO, services, heroStats, trustBadges,
   homeCareHighlight, differentials, whatsappLink, waMessage,
 } from '../lib/data.js'
 import { staggerStyle, useDocumentMeta, useHeroParallax, useScrollReveal } from '../lib/hooks.js'
@@ -13,9 +13,24 @@ const DEFAULT_DESCRIPTION = 'Jaqueline Lima, fisioterapeuta e quiropraxista em P
 
 export default function HomePage() {
   const heroArtRef = useRef(null)
+  const [rating, setRating] = useState(0)
+  const [testimonialText, setTestimonialText] = useState('')
+  const [testimonialName, setTestimonialName] = useState('')
   useScrollReveal()
   useHeroParallax(heroArtRef)
   useDocumentMeta(DEFAULT_TITLE, DEFAULT_DESCRIPTION)
+
+  // No backend/database on this static site, so a submitted testimonial can't appear
+  // publicly on its own — it's sent to Jaqueline via WhatsApp (with the star rating spelled
+  // out as text) for her to review and, if she authorizes it, have added to the site for real.
+  const submitTestimonial = (e) => {
+    e.preventDefault()
+    if (!testimonialText.trim() || rating === 0) return
+    const stars = '⭐'.repeat(rating) + '☆'.repeat(5 - rating)
+    const who = testimonialName.trim() || 'Anônimo'
+    const message = `Olá, Dra. Jaqueline! Quero deixar um depoimento sobre o atendimento.\n\nNota: ${stars} (${rating}/5)\nDepoimento: "${testimonialText.trim()}"\nNome: ${who}`
+    window.open(waMessage(message), '_blank', 'noopener')
+  }
 
   return (
     <>
@@ -151,18 +166,40 @@ export default function HomePage() {
       </section>
 
       <section className="content-section testimonials-section" id="depoimentos">
-        <div className="section-label reveal"><span>05</span><span>O que dizem</span></div>
-        <h2 className="reveal" style={staggerStyle(1)}>O que dizem<br /><em>sobre mim.</em></h2>
-        <div className="testimonials-grid">
-          {testimonials.map(({ text, name }, i) => (
-            <div className="testimonial-card reveal" style={staggerStyle(i)} key={text}>
-              <span className="testimonial-avatar" aria-hidden="true"><Icon id="icon-user" /></span>
-              <span className="testimonial-quote-mark" aria-hidden="true">"</span>
-              <p className="testimonial-text">{text}</p>
-              <span className="testimonial-name">{name}</span>
+        <div className="section-label reveal"><span>05</span><span>Sua opinião importa</span></div>
+        <h2 className="reveal" style={staggerStyle(1)}>Deixe seu<br /><em>depoimento.</em></h2>
+        <p className="testimonials-intro reveal" style={staggerStyle(2)}>Sua avaliação ajuda outras pessoas a conhecerem o cuidado que você recebeu. Escreva abaixo e envie pelo WhatsApp — assim que autorizado, seu depoimento pode aparecer aqui no site.</p>
+        <form className="testimonial-form reveal" style={staggerStyle(3)} onSubmit={submitTestimonial}>
+          <div className="testimonial-form-field">
+            <span>Sua nota</span>
+            <div className="star-rating" role="radiogroup" aria-label="Nota de 1 a 5 estrelas">
+              {[1, 2, 3, 4, 5].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  className="star-btn"
+                  role="radio"
+                  aria-checked={n === rating}
+                  aria-label={`${n} estrela${n > 1 ? 's' : ''}`}
+                  onClick={() => setRating(n)}
+                >
+                  <Icon id={n <= rating ? 'icon-star-filled' : 'icon-star'} />
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+          <label className="testimonial-form-field">
+            <span>Seu depoimento</span>
+            <textarea required rows={4} placeholder="Conte como foi a sua experiência..." value={testimonialText} onChange={(e) => setTestimonialText(e.target.value)} />
+          </label>
+          <label className="testimonial-form-field">
+            <span>Seu nome (opcional)</span>
+            <input type="text" placeholder="Como podemos te chamar?" value={testimonialName} onChange={(e) => setTestimonialName(e.target.value)} />
+          </label>
+          <button type="submit" className="primary-button" disabled={!testimonialText.trim() || rating === 0}>
+            Enviar depoimento pelo WhatsApp <Icon id="icon-arrow-up-right" />
+          </button>
+        </form>
       </section>
 
       <section className="content-section contact-section" id="contato">
