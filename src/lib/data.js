@@ -52,12 +52,14 @@ export const trustBadges = [
   'Atendimento na sua casa ou na minha',
 ]
 
-// TODO: depoimentos fictícios para preencher o layout — substituir por depoimentos reais
-// de pacientes (com autorização deles) antes de publicar.
+// Comentários reais recebidos no Instagram da Jaqueline. Sem nomes reais por
+// privacidade (a menos que a paciente autorize depois) — daí o nome genérico
+// "Paciente atendido(a)" em todos. O 3º é um placeholder para a Dra. Jaqueline
+// enviar outro comentário real depois.
 export const testimonials = [
-  ['Maria S.', 'Fisioterapia Geriátrica', 'Me senti acolhida desde a primeira consulta. O cuidado com calma e atenção fez toda a diferença na minha recuperação.'],
-  ['Carlos R.', 'Fisioterapia Esportiva', 'Profissionalismo e dedicação em cada sessão. Voltei a treinar sem dores graças ao acompanhamento cuidadoso.'],
-  ['Beatriz A.', 'Fisioterapia Pélvica / Gestante', 'Um atendimento humano, atencioso e muito acolhedor durante toda a gestação. Recomendo de coração.'],
+  { text: 'Mãozinhas abençoadas que eu amo', name: 'Paciente atendido(a)' },
+  { text: 'A melhor fisio da vida', name: 'Paciente atendido(a)' },
+  { text: '[Depoimento a preencher pela Dra. Jaqueline]', name: 'Paciente atendido(a)' },
 ]
 
 // O atendimento domiciliar não é "mais um item" da lista — é o modelo padrão,

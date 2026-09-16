@@ -154,12 +154,12 @@ export default function HomePage() {
         <div className="section-label reveal"><span>05</span><span>O que dizem</span></div>
         <h2 className="reveal" style={staggerStyle(1)}>O que dizem<br /><em>sobre mim.</em></h2>
         <div className="testimonials-grid">
-          {testimonials.map(([name, role, text], i) => (
-            <div className="testimonial-card reveal" style={staggerStyle(i)} key={name}>
+          {testimonials.map(({ text, name }, i) => (
+            <div className="testimonial-card reveal" style={staggerStyle(i)} key={text}>
+              <span className="testimonial-avatar" aria-hidden="true"><Icon id="icon-user" /></span>
               <span className="testimonial-quote-mark" aria-hidden="true">"</span>
               <p className="testimonial-text">{text}</p>
               <span className="testimonial-name">{name}</span>
-              <span className="testimonial-role">{role}</span>
             </div>
           ))}
         </div>

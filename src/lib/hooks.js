@@ -111,7 +111,12 @@ export function useCustomCursor(ref) {
     const move = (e) => {
       if (raf) return
       raf = requestAnimationFrame(() => {
-        el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
+        // Position via CSS custom properties (read by the `transform` rule in App.css)
+        // instead of setting `transform` directly, so the .is-active hover-scale
+        // (driven by the stylesheet) can still transition smoothly on top of it —
+        // an inline `transform` would otherwise overwrite that on every mousemove frame.
+        el.style.setProperty('--cursor-x', `${e.clientX}px`)
+        el.style.setProperty('--cursor-y', `${e.clientY}px`)
         raf = null
       })
     }

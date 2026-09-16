@@ -21,7 +21,7 @@ export default function Layout() {
       <div className="scroll-progress" aria-hidden="true">
         <div className="scroll-progress-track">
           <div className="scroll-progress-fill" style={{ transform: `scaleY(${progress})` }}></div>
-          <div className="scroll-progress-marker" style={{ top: `${progress * 100}%` }}><Icon id="icon-spark" /></div>
+          <div className="scroll-progress-marker" style={{ '--progress': progress }}><Icon id="icon-spark" /></div>
         </div>
       </div>
       <header className="site-header">
@@ -60,7 +60,7 @@ export default function Layout() {
 
       <footer className="site-footer">
         <div className="site-footer-inner">
-          <span><span className="footer-mark"><img src="/logo.png" alt="" /></span>Jaqueline Lima</span>
+          <span><span className="footer-mark"><img src="/logo.png" alt="" loading="lazy" decoding="async" /></span>Jaqueline Lima</span>
           <span>Fisioterapia e Quiropraxia · Padre Bernardo - GO</span>
           <a href="/#inicio">Voltar ao início <Icon id="icon-arrow-up" /></a>
         </div>
