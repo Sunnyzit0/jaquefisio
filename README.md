@@ -1,16 +1,27 @@
-# React + Vite
+# Jaqueline Lima · Fisioterapia e Quiropraxia
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Site para a fisioterapeuta Jaqueline Lima, que atende em domicílio em Padre Bernardo, GO.
 
-Currently, two official plugins are available:
+**[jaquefisio.vercel.app](https://jaquefisio.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Print da página inicial](docs/print.jpg)
 
-## React Compiler
+## O que tem no site
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Página inicial com apresentação, serviços, formato de atendimento e contato
+- Uma página própria para cada um dos 8 serviços (`/servicos/:slug`)
+- Botão flutuante de WhatsApp para agendar avaliação
+- Formulário de avaliação (nota + texto) enviado pelo WhatsApp
+- Pensado para pacientes idosos: textos grandes, bom contraste e navegação simples
+- SEO técnico: `sitemap.xml`, `robots.txt` e imagem de compartilhamento (Open Graph)
 
-## Expanding the Oxlint configuration
+## Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+React 19 · Vite · React Router · Tailwind CSS · Vercel
+
+## Rodar localmente
+
+```bash
+npm install
+npm run dev
+```
